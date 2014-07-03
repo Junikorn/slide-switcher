@@ -1,0 +1,24 @@
+{
+	"name": "slide-switcher",
+	"version": "0.0.1",
+	"authors": [
+		"Błażej Wolańczyk <blazejwolanczyk@gmail.com>"
+	],
+	"description": "Polymer component for slide switching with animation",
+	"main": "slide-switcher.html",
+	"keywords": [
+		"polymer",
+		"slide",
+		"switcher",
+		"accordion"
+	],
+	"license": "BSD",
+	"homepage": "https://github.com/Junikorn/slide-switcher",
+	"ignore": [
+		"node_modules",
+		"bower_components"
+	],
+	"dependencies": {
+		"core-selector": "Polymer/core-selector#~0.3.3"
+    },
+}
