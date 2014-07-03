@@ -20,5 +20,5 @@
 	],
 	"dependencies": {
 		"core-selector": "Polymer/core-selector#~0.3.3"
-    },
+    }
 }
