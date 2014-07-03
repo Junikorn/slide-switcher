@@ -10,17 +10,19 @@ Summary
 
 Slide-switcher creates core-selector-like element which can change state in reaction to scroll animating content (it also uses selected attribute and allows to disable scroll events). It fits parent element but can by styled not to with position css styles.
 
+```html
 <slide-switcher valueattr="id" selected="{{s}}" selectedIndex="{{sI}}" noscroll>
 	<slide-clip id="company">
-    Company
+    		Company
 	</slide-clip>
 	<slide-clip id="employees">
-    Employees
+    		Employees
 	</slide-clip>
 	<slide-clip id="aboutus">
-    About Us
+    		About Us
 	</slide-clip>
 </slide-switcher>
+```
 
 Attributes
 -------------
