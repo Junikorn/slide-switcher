@@ -1,12 +1,13 @@
 {
 	"name": "slide-switcher",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"authors": [
 		"Błażej Wolańczyk <blazejwolanczyk@gmail.com>"
 	],
 	"description": "Polymer component for slide switching with animation",
 	"main": "slide-switcher.html",
 	"keywords": [
+		"slide-switcher",
 		"polymer",
 		"slide",
 		"switcher",
