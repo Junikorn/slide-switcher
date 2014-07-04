@@ -1,7 +1,7 @@
 <link rel="import" href="../core-selector/core-selector.html">
 <link rel="import" href="slide-clip.html">
 
-<polymer-element name="slide-switcher" attributes="selected selectedIndex valueattr noscroll" on-mousewheel="{{scroll}}">
+<polymer-element name="slide-switcher" attributes="selected selectedIndex valueattr noscroll">
 	<template>
 		<style>
 			:host {
@@ -41,15 +41,21 @@
 	</template>
 	<script>
 		Polymer('slide-switcher', {
-			noscroll: false,
 			selectedIndex: 0,
 			observe: {
-				selectedIndex: 'getSelected',
+				selectedIndex: 'refresh',
 				selected: 'getIndex'
 			},
-			getSelected: function(){
+			noscrollChanged: function(){
+				debugger;
 				var me = this;
-				me.selected = me.clips[me.selectedIndex][me.valueattr] || me.selectedIndex;
+				if(me.noscroll){
+					me.removeEventListener('mousewheel', me.scroll);
+					me.removeEventListener('DOMMouseScroll', me.scroll);
+				}else if(!me.noscroll){
+					me.addEventListener('mousewheel', me.scroll);
+					me.addEventListener('DOMMouseScroll', me.scroll); //Fierefox is weird
+				}
 			},
 			getIndex: function(){
 				var me = this;
@@ -61,10 +67,9 @@
 						me.selectedIndex = me.clips.indexOf(element[0]);
 					}
 				}
-				me.refresh();
 			},
 			scroll: function(e){
-				if(!this.noscroll && (!this.lastScroll || new Date() - this.lastScroll > 1000)){
+				if(!this.lastScroll || new Date() - this.lastScroll > 1000){
 					this.lastScroll = new Date();
 					var scroll = e.wheelDelta ? e.wheelDelta : - e.detail;
 					if(scroll < 0 && this.selectedIndex < this.clips.length - 1){
@@ -74,10 +79,15 @@
 					}
 				}
 			},
-			refresh: function(){
+			refresh: function(oldVal, newVal){
 				var me = this;
 				me.clips = this.getElementsByTagName('slide-clip').array();
 				me.clips.forEach(function(clip, index){
+					if(index === oldVal || index === newVal){
+						clip.removeAttribute('ghost');
+					}else{
+						clip.setAttribute('ghost', true);
+					}
 					if(index < me.selectedIndex){
 						clip.removeAttribute('show');
 						clip.removeAttribute('hidden-bottom');
@@ -94,10 +104,7 @@
 				});
 			},
 			domReady: function(){
-				if(/Firefox/i.test(navigator.userAgent)){
-					this.addEventListener('DOMMouseScroll', this.scroll);
-				}
-				this.refresh();
+				this.refresh(this.selectedIndex, this.selectedIndex);
 			}
 		});
 	</script>
