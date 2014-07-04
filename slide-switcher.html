@@ -1,50 +1,18 @@
 <link rel="import" href="../core-selector/core-selector.html">
 <link rel="import" href="slide-clip.html">
 
-<polymer-element name="slide-switcher" attributes="selected selectedIndex valueattr noscroll">
+<polymer-element name="slide-switcher" attributes="noscroll" extends="core-selector">
 	<template>
-		<style>
-			:host {
-				bottom: 0;
-				position: absolute;
-				top: 0;
-				width: 100%;
-				overflow: hidden;
-				-moz-transition: opacity .5s,-moz-transform 1s;
-				-o-transition: opacity .5s,-o-transform 1s;
-				-webkit-transition: opacity .5s,-webkit-transform 1s;
-				transition: opacity .5s,transform 1s;
-				-moz-transition-timing-function: cubic-bezier(.77,0,.175,1);
-				-o-transition-timing-function: cubic-bezier(.77,0,.175,1);
-				-webkit-transition-timing-function: cubic-bezier(.77,0,.175,1);
-				transition-timing-function: cubic-bezier(.77,0,.175,1);
-				-webkit-backface-visibility: hidden;
-				-moz-transform: translate3d(0,0,0);
-				-ms-transform: translate3d(0,0,0);
-				-o-transform: translate3d(0,0,0);
-				-webkit-transform: translate3d(0,0,0);
-				transform: translate3d(0,0,0);
-				-moz-box-sizing: border-box;
-				box-sizing: border-box;
-			}
-			:host > div {
-				position: absolute;
-				top: 0;
-				bottom: 0;
-				width: 100%;
-			}
-		</style>
-		<core-selector id="selector" selected="{{selected}}" selectedIndex="{{selectedIndex}}" valueattr="{{valueattr}}" target="{{$.slides}}" itemSelector="slide-clip"></core-selector>
+		<link href="slide-switcher.css" rel="stylesheet">
+		<core-selection id="selection" multi="{{multi}}" on-core-select="{{selectionSelect}}"></core-selection>
 		<div>
-			<content select="slide-clip"></content>
+    		<content id="items" select="slide-clip"></content>
 		</div>
 	</template>
 	<script>
 		Polymer('slide-switcher', {
-			selectedIndex: 0,
 			observe: {
 				selectedIndex: 'refresh',
-				selected: 'getIndex',
 				noscroll: 'setEventHandling'
 			},
 			setEventHandling: function(){
@@ -57,22 +25,11 @@
 					me.addEventListener('DOMMouseScroll', me.scroll); //Fierefox is weird
 				}
 			},
-			getIndex: function(){
-				var me = this;
-				if(typeof(me.valueattr) === 'undefined'){
-					me.selectedIndex = me.selected;
-				}else{
-					var element = this.querySelectorAll('slide-clip[' + me.valueattr + '=' + me.selected + ']').array();
-					if(element.length === 1 && me.clips){
-						me.selectedIndex = me.clips.indexOf(element[0]);
-					}
-				}
-			},
 			scroll: function(e){
 				if(!this.lastScroll || new Date() - this.lastScroll > 1000){
 					this.lastScroll = new Date();
 					var scroll = e.wheelDelta ? e.wheelDelta : - e.detail;
-					if(scroll < 0 && this.selectedIndex < this.clips.length - 1){
+					if(scroll < 0 && this.selectedIndex < this.items.length - 1){
 						this.selectedIndex++;
 					}else if(scroll > 0 && this.selectedIndex > 0){
 						this.selectedIndex--;
@@ -81,9 +38,8 @@
 			},
 			refresh: function(oldVal, newVal){
 				var me = this;
-				me.clips = this.getElementsByTagName('slide-clip').array();
-				me.selected = me.clips[me.selectedIndex][me.valueattr] || me.selectedIndex;
-				me.clips.forEach(function(clip, index){
+				me.selected = (me.valueattr && me.items[me.selectedIndex]) ? me.valueForNode(me.items[me.selectedIndex]) : me.selectedIndex;
+				me.items.forEach(function(clip, index){
 					if(index === oldVal || index === newVal){
 						clip.removeAttribute('ghost');
 					}else{
