@@ -41,12 +41,28 @@
 	</template>
 	<script>
 		Polymer('slide-switcher', {
-			observe: {
-				selectedIndex: 'refresh',
-				selected: 'refresh'
-			},
-			selectedIndex: 0,
 			noscroll: false,
+			selectedIndex: 0,
+			observe: {
+				selectedIndex: 'getSelected',
+				selected: 'getIndex'
+			},
+			getSelected: function(){
+				var me = this;
+				me.selected = me.clips[me.selectedIndex][me.valueattr] || me.selectedIndex;
+			},
+			getIndex: function(){
+				var me = this;
+				if(typeof(me.valueattr) === 'undefined'){
+					me.selectedIndex = me.selected;
+				}else{
+					var element = this.querySelectorAll('slide-clip[' + me.valueattr + '=' + me.selected + ']').array();
+					if(element.length === 1 && me.clips){
+						me.selectedIndex = me.clips.indexOf(element[0]);
+					}
+				}
+				me.refresh();
+			},
 			scroll: function(e){
 				if(!this.noscroll && (!this.lastScroll || new Date() - this.lastScroll > 1000)){
 					this.lastScroll = new Date();
@@ -55,24 +71,24 @@
 						this.selectedIndex++;
 					}else if(scroll > 0 && this.selectedIndex > 0){
 						this.selectedIndex--;
-						
 					}
 				}
 			},
 			refresh: function(){
 				var me = this;
 				me.clips = this.getElementsByTagName('slide-clip').array();
-				me.selected = me.clips[me.selectedIndex][me.valueattr] || me.selectedIndex;
 				me.clips.forEach(function(clip, index){
 					if(index < me.selectedIndex){
 						clip.removeAttribute('show');
+						clip.removeAttribute('hidden-bottom');
 						clip.setAttribute('hidden-top', true);
 					}else if(index === me.selectedIndex){
 						clip.removeAttribute('hidden-top');
 						clip.removeAttribute('hidden-bottom');
 						clip.setAttribute('show', true);
-					}else{
+					}else if(index > me.selectedIndex){
 						clip.removeAttribute('show');
+						clip.removeAttribute('hidden-top');
 						clip.setAttribute('hidden-bottom', true);
 					}
 				});
