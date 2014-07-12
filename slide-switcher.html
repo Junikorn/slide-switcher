@@ -26,8 +26,14 @@
 				}
 			},
 			scroll: function(e){
-				if(!this.lastScroll || new Date() - this.lastScroll > 1000){
-					this.lastScroll = new Date();
+                var time = new Date();
+                if(!this.lastScroll){
+                    var temp = new Date(new Date().getTime() - 5000);
+                    this.lastChange = temp;
+                    this.lastScroll = temp;
+                }
+				if(time - this.lastChange > 1000 && time - this.lastScroll > 1000){
+                    this.lastScroll = new Date();
 					var scroll = e.wheelDelta ? e.wheelDelta : - e.detail;
 					if(scroll < 0 && this.selectedIndex < this.items.length - 1){
 						this.selectedIndex++;
@@ -37,28 +43,40 @@
 				}
 			},
 			refresh: function(oldVal, newVal){
-				var me = this;
-				me.selected = (me.valueattr && me.items[me.selectedIndex]) ? me.valueForNode(me.items[me.selectedIndex]) : me.selectedIndex;
-				me.items.forEach(function(clip, index){
-					if(index === oldVal || index === newVal){
-						clip.removeAttribute('ghost');
-					}else{
-						clip.setAttribute('ghost', true);
-					}
-					if(index < me.selectedIndex){
-						clip.removeAttribute('show');
-						clip.removeAttribute('hidden-bottom');
-						clip.setAttribute('hidden-top', true);
-					}else if(index === me.selectedIndex){
-						clip.removeAttribute('hidden-top');
-						clip.removeAttribute('hidden-bottom');
-						clip.setAttribute('show', true);
-					}else if(index > me.selectedIndex){
-						clip.removeAttribute('show');
-						clip.removeAttribute('hidden-top');
-						clip.setAttribute('hidden-bottom', true);
-					}
-				});
+				var me = this,
+                    diff = new Date() - me.lastChange;
+                if(!me.lastChange || diff > 1000){
+                    me.lastChange = new Date();
+                    me.selected = (me.valueattr && me.items[me.selectedIndex]) ? me.valueForNode(me.items[me.selectedIndex]) : me.selectedIndex;
+                    me.items.forEach(function(clip, index){
+                        if(index === oldVal || index === newVal){
+                            clip.removeAttribute('ghost');
+                        }else{
+                            clip.setAttribute('ghost', true);
+                        }
+                        if(index < me.selectedIndex){
+                            clip.removeAttribute('show');
+                            clip.removeAttribute('hidden-bottom');
+                            clip.setAttribute('hidden-top', true);
+                        }else if(index === me.selectedIndex){
+                            clip.removeAttribute('hidden-top');
+                            clip.removeAttribute('hidden-bottom');
+                            clip.setAttribute('show', true);
+                        }else if(index > me.selectedIndex){
+                            clip.removeAttribute('show');
+                            clip.removeAttribute('hidden-top');
+                            clip.setAttribute('hidden-bottom', true);
+                        }
+                    });
+                    me.lastValue = newVal;
+                }else{
+                    if(me.queuedChange){
+                        clearTimeout(me.queuedChange);
+                    }
+                    me.queuedChange = setTimeout(function(){
+                        me.refresh(me.lastValue, newVal);
+                    },  1000 - diff);
+                }
 			},
 			domReady: function(){
 				this.setEventHandling();
