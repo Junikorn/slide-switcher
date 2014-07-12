@@ -1,23 +1,25 @@
 {
 	"name": "slide-switcher",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"authors": [
 		"Błażej Wolańczyk <blazejwolanczyk@gmail.com>"
 	],
-	"description": "Polymer component for slide switching with animation",
+	"description": "Polymer component for slide switching with animation and scroll events",
 	"main": "slide-switcher.html",
 	"keywords": [
 		"slide-switcher",
+		"core-selector",
 		"polymer",
 		"slide",
 		"switcher",
 		"accordion"
 	],
-	"license": "BSD",
+	"license": "BSD Beerware",
 	"homepage": "https://github.com/Junikorn/slide-switcher",
 	"ignore": [
 		"node_modules",
-		"bower_components"
+		"bower_components",
+		".idea"
 	],
 	"dependencies": {
 		"core-selector": "Polymer/core-selector#~0.3.3"

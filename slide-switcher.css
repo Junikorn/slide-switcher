@@ -1,8 +1,9 @@
 :host {
+    position: absolute;
+    top: 0;
+    left: 0;
 	bottom: 0;
-	position: absolute;
-	top: 0;
-	width: 100%;
+    right: 0;
 	overflow: hidden;
 	-moz-transition: opacity .5s,-moz-transform 1s;
 	-o-transition: opacity .5s,-o-transform 1s;
