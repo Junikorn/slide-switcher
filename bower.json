@@ -8,6 +8,7 @@
 	"main": "slide-switcher.html",
 	"keywords": [
 		"slide-switcher",
+		"web-components",
 		"core-selector",
 		"polymer",
 		"slide",
