@@ -5,8 +5,10 @@
 	<template>
 		<link href="slide-switcher.css" rel="stylesheet">
 		<core-selection id="selection" multi="{{multi}}" on-core-select="{{selectionSelect}}"></core-selection>
-		<div>
-    		<content id="items" select="slide-clip"></content>
+		<div id="box">
+			<div id="container">
+	    		<content id="items" select="slide-clip"></content>
+			</div>
 		</div>
 	</template>
 	<script>

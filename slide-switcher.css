@@ -1,4 +1,8 @@
 :host {
+	display: block;
+	position: relative;
+}
+:host #box {
     position: absolute;
     top: 0;
     left: 0;
@@ -9,10 +13,10 @@
 	-o-transition: opacity .5s,-o-transform 1s;
 	-webkit-transition: opacity .5s,-webkit-transform 1s;
 	transition: opacity .5s,transform 1s;
-	-moz-transition-timing-function: cubic-bezier(.77,0,.175,1);
-	-o-transition-timing-function: cubic-bezier(.77,0,.175,1);
-	-webkit-transition-timing-function: cubic-bezier(.77,0,.175,1);
-	transition-timing-function: cubic-bezier(.77,0,.175,1);
+	-moz-transition-timing-function: cubic-bezier(.8,0,.2,1);
+	-o-transition-timing-function: cubic-bezier(.8,0,.2,1);
+	-webkit-transition-timing-function: cubic-bezier(.8,0,.2,1);
+	transition-timing-function: cubic-bezier(.8,0,.2,1);
 	-webkit-backface-visibility: hidden;
 	-moz-transform: translate3d(0,0,0);
 	-ms-transform: translate3d(0,0,0);
@@ -22,7 +26,7 @@
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
-:host > div {
+:host #container {
 	position: absolute;
 	top: 0;
 	bottom: 0;
