@@ -17,7 +17,7 @@
 	-webkit-perspective: 1000;
 	-webkit-backface-visibility: hidden;
 }
-:host([hidden-top]), :host([hidden-bottom]) > div {
+:host([hidden-before]), :host([hidden-after]) > div {
 	display: block;
 	-moz-transform: translate3d(0,-100%,0);
 	-ms-transform: translate3d(0,-100%,0);
@@ -25,7 +25,7 @@
 	-webkit-transform: translate3d(0,-100%,0);
 	transform: translate3d(0,-100%,0);
 }
-:host([hidden-top]) > div, :host([hidden-bottom]) {
+:host([hidden-before]) > div, :host([hidden-after]) {
 	display: block;
 	-moz-transform: translate3d(0,100%,0);
 	-ms-transform: translate3d(0,100%,0);

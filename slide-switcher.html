@@ -59,16 +59,16 @@
                         }
                         if(index < me.selectedIndex){
                             clip.removeAttribute('show');
-                            clip.removeAttribute('hidden-bottom');
-                            clip.setAttribute('hidden-top', true);
+                            clip.removeAttribute('hidden-after');
+                            clip.setAttribute('hidden-before', true);
                         }else if(index === me.selectedIndex){
-                            clip.removeAttribute('hidden-top');
-                            clip.removeAttribute('hidden-bottom');
+                            clip.removeAttribute('hidden-before');
+                            clip.removeAttribute('hidden-after');
                             clip.setAttribute('show', true);
                         }else if(index > me.selectedIndex){
                             clip.removeAttribute('show');
-                            clip.removeAttribute('hidden-top');
-                            clip.setAttribute('hidden-bottom', true);
+                            clip.removeAttribute('hidden-before');
+                            clip.setAttribute('hidden-after', true);
                         }
                     });
                     me.lastValue = newVal;
