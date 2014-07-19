@@ -13,7 +13,8 @@
 		"polymer",
 		"slide",
 		"switcher",
-		"accordion"
+		"accordion",
+		"carousel"
 	],
 	"license": "BSD Beerware",
 	"homepage": "https://github.com/Junikorn/slide-switcher",

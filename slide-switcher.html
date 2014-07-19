@@ -28,6 +28,7 @@
 				}
 			},
 			scroll: function(e){
+                e.preventDefault();
                 var time = new Date();
                 if(!this.lastScroll){
                     var temp = new Date(new Date().getTime() - 5000);
