@@ -1,15 +1,15 @@
 slide-switcher
 ==============
 
-Polymer component for slide switching with animation and scroll events
+Polymer carousel component with animation and scroll events
 
 
 
 Summary
 --------------
 
-Slide-switcher extends core-selector adding reaction to scroll and content animation (carousel on optimized css3).
-It fits parent element but can by styled not to with position css styles.
+Slide-switcher extends [core-selector](https://github.com/Polymer/core-selector) adding content animation and reaction to scroll.
+For proper display it needs to be styled with width and height or Polymer fit attribute (or to be part of container with defined layout).
 
 ```html
 <slide-switcher valueattr="id" selected="{{s}}" selectedIndex="{{sI}}" noscroll>
@@ -28,4 +28,4 @@ It fits parent element but can by styled not to with position css styles.
 Attributes
 -------------
 
-noscroll - Boolean (Tag - if present scroll events are disabled)
+noscroll - Boolean (disables scroll events)

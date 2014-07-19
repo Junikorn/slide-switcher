@@ -31,7 +31,7 @@
                 var time = new Date();
                 if(!this.lastScroll){
                     var temp = new Date(new Date().getTime() - 5000);
-                    this.lastChange = temp;
+                    this.lastChange = this.lastChange || temp;
                     this.lastScroll = temp;
                 }
 				if(time - this.lastChange > 1000 && time - this.lastScroll > 1000){
